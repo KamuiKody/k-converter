@@ -59,17 +59,11 @@ function showHeader(menu)
     if convert.menu == 'qb-menu' then
         exports['qb-menu']:showHeader(menu)
     elseif convert.menu == 'nh-context' then
-        local conversion = {}
-        for _,v in pairs(menu) do
-            conversion[#conversion+1] = {
-                header = v.header,
-                context = v.txt,
-                event = v.params.event,
-                image = v.image,
-                args = v.params.args
-            }
+        if menu.params.isServer then
+            TriggerServerEvent(menu.params.event, menu.params.args)
+        else
+            TriggerEvent(menu.params.event, menu.params.args)
         end
-        exports['nh-context']:ContextMenu(conversion)
     end
 end
 
