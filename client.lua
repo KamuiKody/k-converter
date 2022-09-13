@@ -49,7 +49,7 @@ function ContextMenu(menu)
                     event = v.event,
                     args = v.args
                 }
-            end
+            }
         end
         exports['qb-menu']:openMenu(conversion)
     end
