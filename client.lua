@@ -21,6 +21,7 @@ function openMenu(menu)
             conversion[#conversion+1] = {
                 header = v.header,
                 context = v.txt,
+                server = v.params.isServer,
                 event = v.params.event,
                 image = v.image,
                 args = v.params.args
@@ -46,6 +47,7 @@ function ContextMenu(menu)
                 txt = v.context,
                 image = v.image,
                 params = {
+                    isServer = v.params.server,
                     event = v.event,
                     args = v.args
                 }
@@ -57,13 +59,20 @@ end
 
 function showHeader(menu)
     if convert.menu == 'qb-menu' then
-        exports['qb-menu']:showHeader(menu)
+        exports['qb-menu']:openMenu(menu)
     elseif convert.menu == 'nh-context' then
-        if menu.params.isServer then
-            TriggerServerEvent(menu.params.event, menu.params.args)
-        else
-            TriggerEvent(menu.params.event, menu.params.args)
+        local conversion = {}
+        for _,v in pairs(menu) do
+            conversion[#conversion+1] = {
+                header = v.header,
+                context = v.txt,
+                server = v.params.isServer,
+                event = v.params.event,
+                image = v.image,
+                args = v.params.args
+            }
         end
+        exports['nh-context']:ContextMenu(conversion)
     end
 end
 
@@ -93,7 +102,7 @@ end
 
 -- function Keyboard(input)
 --     if convert.input == 'nh-keyboard' then
---         exports['nh-keyboard']:Keyboard(input)
+--         exports['nh-keyboard']:Keyboard(input)        
 --     elseif convert.input == 'qb-input' then
               
 --     end
